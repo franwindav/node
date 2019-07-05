@@ -1,0 +1,52 @@
+{
+   "env": {
+      "browser": false,
+      "es6": true
+   },
+   "extends": ["eslint:recommended", "plugin:prettier/recommended", "plugin:node/recommended"],
+   "globals": {
+      "Atomics": "readonly",
+      "SharedArrayBuffer": "readonly"
+   },
+   "parser": "babel-eslint",
+   "parserOptions": {
+      "ecmaFeatures": {
+         "jsx": true
+      },
+      "ecmaVersion": 2018,
+      "sourceType": "module",
+      "allowImportExportEverywhere": false,
+      "codeFrame": true
+   },
+   "plugins": ["prettier"],
+   "rules": {
+      "object-curly-newline": 0,
+      "no-mixed-operators": 0,
+      "arrow-body-style": 0,
+      "function-paren-newline": 0,
+      "no-plusplus": 0,
+      "space-before-function-paren": 0,
+      "strict": 0,
+      "linebreak-style": ["error", "windows"],
+      "import/no-unresolved": 0,
+      "indent": ["error", 3],
+      "arrow-parens": 0,
+      "no-nested-ternary": 0,
+      "prettier/prettier": 0,
+      "max-len": [
+         "error",
+         250,
+         2,
+         {
+            "ignoreUrls": true
+         }
+      ],
+      "no-confusing-arrow": 0,
+      "implicit-arrow-linebreak": 0,
+      "no-param-reassign": 0,
+      "radix": 0,
+      "prefer-destructuring": 0,
+      "no-underscore-dangle": 0,
+      "eqeqeq": 0
+   }
+}

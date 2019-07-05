@@ -1,0 +1,29 @@
+{
+   "name": "node-js",
+   "version": "1.0.0",
+   "description": "",
+   "main": "index.js",
+   "scripts": {
+      "start": "node app.js",
+      "dev": "nodemon app.js"
+   },
+   "author": "",
+   "license": "ISC",
+   "dependencies": {
+      "express": "^4.17.1",
+      "express-handlebars": "^3.1.0",
+      "path": "^0.12.7"
+   },
+   "devDependencies": {
+      "babel-eslint": "^10.0.2",
+      "eslint": "^6.0.1",
+      "eslint-config-airbnb": "^17.1.1",
+      "eslint-config-prettier": "^6.0.0",
+      "eslint-plugin-jsx-a11y": "^6.2.3",
+      "eslint-plugin-node": "^9.1.0",
+      "eslint-plugin-prettier": "^3.1.0",
+      "eslint-plugin-react": "^7.14.2",
+      "nodemon": "^1.19.1",
+      "prettier": "^1.18.2"
+   }
+}
