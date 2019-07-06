@@ -1,49 +1,53 @@
 const path = require('path');
 const exphbs = require('express-handlebars');
 const express = require('express');
+const bodyParser = require('body-parser');
+
 const app = express();
 const port = 9000;
+const hbs = exphbs.create({
+   defaultLayout: 'main',
+   extname: '.hbs',
+   layoutsDir: path.join(__dirname, 'views/layouts'),
+});
 
 let users = [];
 
-app.use(express.json());
-app.use(express.urlencoded());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (request, response) => {
-   response.render('home', {
-      name: 'John',
-   });
+   response.render('home');
 });
 
-app.post('/', (request, response) => {
-   if (request.body.removeUser == undefined) {
-      users.push(request.body.addUser);
-   } else {
-      users = users.filter(name => name != request.body.removeUser);
+app.get('/deleteUser', (request, response) => {
+   response.render('deleteUser');
+});
+
+app.post('/deleteUser', (request, response) => {
+   users = users.filter(e => e.name != request.body.name);
+   response.redirect('/');
+});
+
+app.get('/addUser', (request, response) => {
+   response.render('addUser');
+});
+
+app.post('/addUser', (request, response) => {
+   if (users.filter(e => e.name == request.body.name).length === 0) {
+      users.push({
+         name: request.body.name,
+      });
    }
-   response.render('home', {
-      name: 'John',
-   });
+   response.redirect('/');
 });
 
-app.post('/users', (request, response) => {
-   let str = `Users:<br>`;
-   for (let i = 0; i < users.length; i++) {
-      str += `${users[i]} <br>`;
-   }
-   response.send(str);
+app.get('/users', (request, response) => {
+   response.render('users', { users });
 });
 
-app.engine(
-   '.hbs',
-   exphbs({
-      defaultLayout: 'main',
-      extname: '.hbs',
-      layoutsDir: path.join(__dirname, 'views/layouts'),
-   }),
-);
+app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
-
 app.set('views', path.join(__dirname, 'views'));
 
 app.listen(port, err => {
