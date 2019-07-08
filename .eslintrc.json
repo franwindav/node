@@ -29,7 +29,13 @@
       "strict": 0,
       "linebreak-style": ["error", "windows"],
       "import/no-unresolved": 0,
-      "indent": ["error", 3],
+      "indent": [
+         "warn",
+         3,
+         {
+            "SwitchCase": 1
+         }
+      ],
       "arrow-parens": 0,
       "no-nested-ternary": 0,
       "prettier/prettier": 0,

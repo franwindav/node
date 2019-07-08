@@ -2,6 +2,7 @@ const path = require('path');
 const exphbs = require('express-handlebars');
 const express = require('express');
 const bodyParser = require('body-parser');
+const Users = require('./Users');
 
 const app = express();
 const port = 9000;
@@ -11,39 +12,49 @@ const hbs = exphbs.create({
    layoutsDir: path.join(__dirname, 'views/layouts'),
 });
 
-let users = [];
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (request, response) => {
-   response.render('home');
-});
-
-app.get('/deleteUser', (request, response) => {
-   response.render('deleteUser');
-});
-
-app.post('/deleteUser', (request, response) => {
-   users = users.filter(e => e.name != request.body.name);
-   response.redirect('/');
-});
-
-app.get('/addUser', (request, response) => {
-   response.render('addUser');
-});
-
-app.post('/addUser', (request, response) => {
-   if (users.filter(e => e.name == request.body.name).length === 0) {
-      users.push({
-         name: request.body.name,
-      });
+app.get('/users/*', (request, response) => {
+   switch (request.params['0']) {
+      case 'home': {
+         response.render('home');
+         break;
+      }
+      case 'addUser': {
+         response.render('addUser');
+         break;
+      }
+      case 'deleteUser': {
+         response.render('deleteUser');
+         break;
+      }
+      case 'getUsers': {
+         response.render('users', { users: Users.getUsers() });
+         break;
+      }
+      default: {
+         response.sendStatus(404);
+      }
    }
-   response.redirect('/');
 });
 
-app.get('/users', (request, response) => {
-   response.render('users', { users });
+app.post('/users/*', (request, response) => {
+   switch (request.params['0']) {
+      case 'addUser': {
+         Users.addUser(request.body.name);
+         response.redirect('/users/home');
+         break;
+      }
+      case 'deleteUser': {
+         Users.deleteUser(request.body.name);
+         response.redirect('/users/home');
+         break;
+      }
+      default: {
+         response.sendStatus(404);
+      }
+   }
 });
 
 app.engine('.hbs', hbs.engine);
